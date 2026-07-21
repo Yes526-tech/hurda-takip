@@ -34,6 +34,7 @@ namespace FireHurdaTakip.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.Tarih = DateTime.SpecifyKind(model.Tarih, DateTimeKind.Utc);
                 model.ToplamPlastikHurdasiKg = model.IzabeyeGonderilenHurdaKg + model.PEnjeksiyonaGonderilenHurdaKg;
                 _context.HurdaKayitlar.Add(model);
                 _context.SaveChanges();
