@@ -1,0 +1,10 @@
+{
+  "orgId": "org-aged-bar-14565798",
+  "projectId": "winter-snow-24013559",
+  "_init": {
+    "features": [
+      "database",
+      "auth"
+    ]
+  }
+}

@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --success-color: #4cc9f0;
+  --background-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-main: #2b2d42;
+  --text-muted: #8d99ae;
+  --border-radius: 16px;
+  --shadow-sm: 0 4px 6px rgba(0,0,0,0.04);
+  --shadow-md: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Navbar Improvements */
+.navbar {
+  background: var(--card-bg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border-bottom: none !important;
+  padding: 15px 0;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--primary-color) !important;
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: var(--text-muted) !important;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+  background: rgba(67, 97, 238, 0.05);
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  border-bottom: none;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+.bg-warning {
+  background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%) !important;
+  color: #333 !important;
+}
+
+.bg-info {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Forms */
+.form-label {
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fcfcfc;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+  background-color: #fff;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(56, 239, 125, 0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+/* Headings */
+h3 {
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+/* Mobile Table / List optimization */
+@media (max-width: 768px) {
+  .table-responsive {
+    border: none;
+  }
+  
+  /* Hide standard table headers on mobile */
+  .table thead {
+    display: none;
+  }
+  
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .table tr {
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    background: var(--card-bg);
+    padding: 10px;
+    border: 1px solid #eee;
+  }
+  
+  .table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    border-top: none !important;
+    border-bottom: 1px solid #f8f9fa;
+  }
+  
+  .table td:last-child {
+    border-bottom: 0;
+  }
+  
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-dark {
+    background: var(--text-main);
+}
+.table th {
+  font-weight: 600;
+  color: white;
+  border: none;
+}
+.table td {
+    vertical-align: middle;
+}
