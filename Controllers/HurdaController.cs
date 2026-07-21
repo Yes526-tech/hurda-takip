@@ -202,5 +202,48 @@ namespace FireHurdaTakip.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+            var kayit = _context.HurdaKayitlar.Find(id);
+            if (kayit == null) return NotFound();
+            return View(kayit);
+        }
+
+        [HttpPost]
+        public IActionResult Duzenle(HurdaKayit model)
+        {
+            if (ModelState.IsValid)
+            {
+                var kayit = _context.HurdaKayitlar.Find(model.Id);
+                if (kayit == null) return NotFound();
+
+                kayit.Tarih = DateTime.SpecifyKind(model.Tarih, DateTimeKind.Utc);
+                kayit.AlinanSiparisNo = model.AlinanSiparisNo;
+                kayit.AkumulatorHurdasiKg = model.AkumulatorHurdasiKg;
+                kayit.IzabeyeGonderilenHurdaKg = model.IzabeyeGonderilenHurdaKg;
+                kayit.PEnjeksiyonaGonderilenHurdaKg = model.PEnjeksiyonaGonderilenHurdaKg;
+                kayit.ToplamPlastikHurdasiKg = model.IzabeyeGonderilenHurdaKg + model.PEnjeksiyonaGonderilenHurdaKg;
+
+                _context.SaveChanges();
+                TempData["Message"] = "Kayıt başarıyla güncellendi.";
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Sil(int id)
+        {
+            var kayit = _context.HurdaKayitlar.Find(id);
+            if (kayit != null)
+            {
+                _context.HurdaKayitlar.Remove(kayit);
+                _context.SaveChanges();
+                TempData["Message"] = "Kayıt başarıyla silindi.";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
