@@ -34,14 +34,40 @@ namespace FireHurdaTakip.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Tarih = DateTime.SpecifyKind(model.Tarih, DateTimeKind.Utc);
-                model.ToplamPlastikHurdasiKg = model.IzabeyeGonderilenHurdaKg + model.PEnjeksiyonaGonderilenHurdaKg;
-                _context.HurdaKayitlar.Add(model);
+                var utcDate = DateTime.SpecifyKind(model.Tarih.Date, DateTimeKind.Utc);
+                
+                // PostgreSQL date comparison using EF.Functions (or just .Date if EF can translate it, but .Date is usually fine in EF Core 9)
+                var existingRecord = _context.HurdaKayitlar.FirstOrDefault(x => x.Tarih.Date == utcDate.Date);
+
+                if (existingRecord != null)
+                {
+                    existingRecord.AkumulatorHurdasiKg += model.AkumulatorHurdasiKg;
+                    existingRecord.IzabeyeGonderilenHurdaKg += model.IzabeyeGonderilenHurdaKg;
+                    existingRecord.PEnjeksiyonaGonderilenHurdaKg += model.PEnjeksiyonaGonderilenHurdaKg;
+                    existingRecord.ToplamPlastikHurdasiKg = existingRecord.IzabeyeGonderilenHurdaKg + existingRecord.PEnjeksiyonaGonderilenHurdaKg;
+                    
+                    if (!string.IsNullOrWhiteSpace(model.AlinanSiparisNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(existingRecord.AlinanSiparisNo))
+                        {
+                            existingRecord.AlinanSiparisNo = model.AlinanSiparisNo;
+                        }
+                        else if (!existingRecord.AlinanSiparisNo.Contains(model.AlinanSiparisNo))
+                        {
+                            existingRecord.AlinanSiparisNo += ", " + model.AlinanSiparisNo;
+                        }
+                    }
+                    TempData["Message"] = "Bu tarihte zaten bir kayıt olduğu için yeni girdiğiniz veriler (KG) mevcut kaydın üzerine toplandı.";
+                }
+                else
+                {
+                    model.Tarih = utcDate;
+                    model.ToplamPlastikHurdasiKg = model.IzabeyeGonderilenHurdaKg + model.PEnjeksiyonaGonderilenHurdaKg;
+                    _context.HurdaKayitlar.Add(model);
+                    TempData["Message"] = "Yeni kayıt başarıyla eklendi.";
+                }
+
                 _context.SaveChanges();
-
-
-
-                TempData["Message"] = "Kayıt başarıyla eklendi.";
                 return RedirectToAction("Index");
             }
             return View(model);
